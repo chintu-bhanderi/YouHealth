@@ -9,6 +9,7 @@ using HospitalManagementApi.Models;
 
 namespace HospitalManagementApi.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PatientsController : ControllerBase
