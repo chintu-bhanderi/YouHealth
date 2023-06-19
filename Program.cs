@@ -14,8 +14,34 @@ builder.Services.AddScoped<IAuthRepo, AuthRepo>();
 builder.Services.AddControllers();
 builder.Services.AddDbContext<HospitalContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("HospitalDbConnection")));
 
+// builder.Services.AddEndpointsApiExplorer();
+// builder.Services.AddSwaggerGen();    
+
+// For Authentication.
+builder.Services.AddAuthentication(JwtBearerDefauIts.AuthenticationScheme) 
+    .AddJwtBearer(opts => 
+    {   
+        opts.TokenVaIidationParameters = new TokenVaIidationParameters 
+        {
+            ValidateIssuerSigningkey = true, 
+            IssuerSigningkey = new SymmetricSecurityKey(System.Text.Encoding.UTF8 
+                .GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value!)), 
+            ValidateIssuer = false,  // who created the token  
+            ValidateAudience = false // target (services/APIs)
+        };
+    });
+ 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c => { 
+    c.AddSecurityDefinition( "oauth2", new OpenApiSecurityScheme
+    {
+        Description = "Standard Authorization using Bearer scheme. Example: 
+        In = ParameterLocation.Header, 
+        Name = "Authorization", 
+        Type = SecuritySchemeType.ApiKey, // OAuth2/Http/OpenIdConnect
+    });
+    c.OperationFilter<SecurityRequirementOperationFilter>();
+});
 
 var app = builder.Build();
 
