@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using HospitalManagementApi.Data;
 using HospitalManagementApi.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HospitalManagementApi.Controllers
 {
