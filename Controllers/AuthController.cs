@@ -18,6 +18,7 @@ namespace HospitalManagementApi.Controllers
                 _authRepo = authRepo;
         }
 
+        [AllowAnonymous]
         [HttpPost("PatientRegister")]
         public async Task<ActionResult<int>> RegisterPatient(PatientRegisterDTO patientDTO)
         {
@@ -29,6 +30,7 @@ namespace HospitalManagementApi.Controllers
             return Ok($"Patient Register Successfully!");
         }
 
+        [AllowAnonymous]
         [HttpPost("DoctorRegister")]
         public async Task<ActionResult<int>> RegisterDoctor(DoctorRegisterDTO doctorDTO)
         {
@@ -40,7 +42,7 @@ namespace HospitalManagementApi.Controllers
             return Ok($"Doctor Register Successfully!");
         }
 
-
+        [AllowAnonymous]
         [HttpPost("PatientLogin")]
         public async Task<ActionResult<int>> LoginPatient(PatientLoginDTO patientDTO)
         {
@@ -60,7 +62,7 @@ namespace HospitalManagementApi.Controllers
             return Ok(token);
         }
 
-
+        [AllowAnonymous]
         [HttpPost("DoctorLogin")]
         public async Task<ActionResult<int>> LoginDoctor(DoctorLoginDTO doctorDTO)
         {
