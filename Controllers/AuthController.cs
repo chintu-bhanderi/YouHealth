@@ -44,24 +44,40 @@ namespace HospitalManagementApi.Controllers
         [HttpPost("PatientLogin")]
         public async Task<ActionResult<int>> LoginPatient(PatientLoginDTO patientDTO)
         {
-            var res = await _authRepo.LoginPatient(patientDTO.Email, patientDTO.Password);
+            var token = await _authRepo.LoginPatient(patientDTO.Email, patientDTO.Password);
             if (res == null)
             {
                 return BadRequest($"Incorrect email or password");
             }
-            return Ok(res);
+            // Set Cookie 
+            var cookieOptions = new CookieOptions
+            {
+                Expires = DateTime.UtcNow.AddDays(1), // Set the expiration time
+                HttpOnly = true, // Prevent JavaScript access to the cookie
+                Secure = true // Use "Secure" attribute for HTTPS-only cookies
+            };
+            Response.Cookies.Append("token", token, cookieOptions);
+            return Ok(token);
         }
 
 
         [HttpPost("DoctorLogin")]
         public async Task<ActionResult<int>> LoginDoctor(DoctorLoginDTO doctorDTO)
         {
-            var res = await _authRepo.LoginDoctor(doctorDTO.Email, doctorDTO.Password);
+            var token = await _authRepo.LoginDoctor(doctorDTO.Email, doctorDTO.Password);
             if (res == null)
             {
                 return BadRequest($"Incorrect email or password");
             }
-            return Ok(res);
+            // Set Cookie 
+            var cookieOptions = new CookieOptions
+            {
+                Expires = DateTime.UtcNow.AddDays(1), // Set the expiration time
+                HttpOnly = true, // Prevent JavaScript access to the cookie
+                Secure = true // Use "Secure" attribute for HTTPS-only cookies
+            };
+            Response.Cookies.Append("token", token, cookieOptions);
+            return Ok(token);
         }
 
         [HttpPut("PatientUpdate/{id}")]
