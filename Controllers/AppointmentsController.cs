@@ -22,7 +22,6 @@ namespace HospitalManagementApi.Controllers
             _context = context;
         }
 
-        [AllowAnonymous]
         // GET: api/Appointments
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments()
